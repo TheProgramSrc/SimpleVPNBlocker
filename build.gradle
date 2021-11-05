@@ -1,0 +1,47 @@
+import org.apache.tools.ant.filters.ReplaceTokens 
+
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.0'
+}
+
+group 'xyz.theprogramsrc'
+version '0.1.0'
+description 'Secure your server against VPNs'
+
+repositories{
+    mavenCentral()
+    mavenLocal()
+
+    maven { url 'https://repo.theprogramsrc.xyz/repository/maven-public/' }
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+    maven { url 'https://oss.sonatype.org/content/repositories/releases/' }
+    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven { url 'https://repo.codemc.org/repository/maven-public' }
+}
+
+dependencies {
+    implementation 'xyz.theprogramsrc:SuperCoreAPI:5.2.4'
+
+    compileOnly 'org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT'
+}
+
+processResources {
+    filter ReplaceTokens, tokens: [name: rootProject.name, version: project.version.toString(), description: project.description]
+}
+
+java.sourceCompatibility = 1.8
+java.targetCompatibility = 1.8
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+shadowJar {
+    relocate 'xyz.theprogramsrc.supercoreapi', 'xyz.theprogramsrc.simplevpnblocker.supercoreapi'
+
+    archiveName 'SimpleVPNBlocker.jar'
+}
+
+sourceSets.main.java.srcDir 'src/main/java'
+sourceSets.main.resources.srcDir 'src/main/resources'

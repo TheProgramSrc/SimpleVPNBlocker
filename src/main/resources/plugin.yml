@@ -1,0 +1,8 @@
+name: '@name@'
+version: '@version@'
+main: xyz.theprogramsrc.simplevpnblocker.SimpleVPNBlocker
+api-version: 1.13
+description: '@description@'
+author: TheProgramSrc
+authors:
+  - Fran
